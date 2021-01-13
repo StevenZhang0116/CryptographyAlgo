@@ -10,8 +10,5 @@ This repository includes various small projects about cryptography algorithm imp
 
 ***padding_oracle_attack.py***: Experiment with a padding oracle attack against a toy web site hosted at *crypto-class.appspot.com*. Padding oracle vulnerabilities affect a wide variety of products, including secure tokens. The website is vulnerable to a CBC padding oracle attack. When a decrypted CBC ciphertext ends in an invalid pad the webserver returns a 403 error code (forbidden request). When the CBC padding is valid, but the message is malformed, the webserver returns a 404 error code (URL not found). To decrypt a single byte, we need to send up to 256 HTTP requests to the site.  The first ciphertext block is the random IV. The decrypted message is ASCII encoded. From this project, we understand that when using encryption we must prevent padding oracle attacks by either using encrypt-then-MAC as in EAX or GCM. Also, if we must use MAC-then-encrypt, then ensure that the site treats padding errors the same way it treats MAC errors.
 
-***discrete_log.py***: Compute discrete log modulo a prime p. Let g be some elements in <img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
-
-
- and suppose you are given h in 
+***discrete_log.py***: Compute discrete log modulo a prime p. Let g be some elements in Zp* and suppose you are given h in Zp* such that h = g^x where 1 <= x <= 2^40. We aim to find x given the input of p, g, h. We can write the unknown x base B as x = x0 * B + x1 and deduce that h/(g^x1) = (g^B)^x0 in Zp. In our case B = 2^20. First, we build a hash table of all possible values of the left-hand side h/(g^x1) for x1 = 0, 1, ..., 2^20. Then for each value x0 = 0, 1, ..., 2^20 check if the right-hand side (g^B)^x0 is in this hash table. If so, then (x0, x1) is found as a valid solution. The overall work requires 2^20 multiplications to build the table and another 2^20 lookups in this table. 
 
